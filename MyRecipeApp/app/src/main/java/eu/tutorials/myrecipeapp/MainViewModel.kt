@@ -8,24 +8,32 @@ import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel(){
 
-    private val _categorieState = mutableStateOf(RecipeState())
-    val categoriesState: State<RecipeState> = _categorieState
+    private val _categorieState = mutableStateOf(RecipeState())  //ekranda degisebilir(mutableState)
+    val categoriesState: State<RecipeState> = _categorieState  //disa aktarmak icin
 
     init{
         fetchCategories()
+        //MainViewModel yuklendigi anda.
     }
 
+    //kategorileri almak icin
+    //Coroutine kullanilarak arka planda calistirilir
     private fun fetchCategories(){
+        //launch coroutine(viewModelScope)
         viewModelScope.launch {
             try{
                 val response = recipeService.getCategories()
+
+                //basarili sekilde kategori alindi ise state'i guncelle
                 _categorieState.value = _categorieState.value.copy(
-                    list = response.categories,
-                    loading = false,
-                    error = null
+                    list = response.categories,   //api'den gelen category listesi
+                    loading = false, //yuklenme durumu sona erdi
+                    error = null    //hata yok
                 )
 
             }catch(e: Exception){
+
+                //hata olustu ise state'i hata mesaji ile guncelle
                 _categorieState.value = _categorieState.value.copy(
                     loading = false,
                     error = "Error fetching Categories ${e.message}"
@@ -34,6 +42,7 @@ class MainViewModel : ViewModel(){
         }
     }
 
+    //if there is loading or not, category list, and errors (ui states)
     data class RecipeState(
         val loading: Boolean=true,
         val list: List<Category> = emptyList(),

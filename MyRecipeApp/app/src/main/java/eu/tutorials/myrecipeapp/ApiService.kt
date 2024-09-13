@@ -15,5 +15,5 @@ val recipeService = retrofit.create(ApiService::class.java)
 interface ApiService{
 
     @GET("categories.php")
-    suspend fun getCategories():CategoriesResponse // CategoriesResponse dondurur.
+    suspend fun getCategories():CategoriesResponse // CategoriesResponse dondurur. Yaniti alip Categories listesine koymak.
 }

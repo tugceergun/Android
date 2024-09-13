@@ -25,8 +25,8 @@ import coil.compose.rememberAsyncImagePainter
 
 @Composable
 fun RecipeScreen(modifier: Modifier = Modifier){
-    val recipeViewModel: MainViewModel = viewModel()
-    val viewstate by recipeViewModel.categoriesState
+    val recipeViewModel: MainViewModel = viewModel() //loading MainViewModel
+    val viewstate by recipeViewModel.categoriesState //category state at viewModel
     Box(modifier=Modifier.fillMaxSize()){
         when{
             viewstate.loading -> {
@@ -49,9 +49,11 @@ fun RecipeScreen(modifier: Modifier = Modifier){
 @Composable
 fun CategoryScreen(categories:List<Category>){
     LazyVerticalGrid(GridCells.Fixed(2), modifier = Modifier.fillMaxSize()){
+
+        //kategorileri sirayla gridde gosterme.
         items(categories){
             category -> 
-            CategoryItem(category = category)
+            CategoryItem(category = category) //Her kategori icin CategoryItem bileseni cagirilir.
         }
     }
 }
@@ -65,16 +67,17 @@ fun CategoryItem(category: Category){
         horizontalAlignment = Alignment.CenterHorizontally)
     {
 
+        //Category resmi. coil kutuphanesi ile url'den resim yukleme.
         Image(
             painter= rememberAsyncImagePainter(category.strCategoryThumb),
             contentDescription = null,
             modifier = Modifier
                 .fillMaxSize()
-                .aspectRatio(1f)
+                .aspectRatio(1f) //resmin en boy orani.
         )
 
         Text(
-            text=category.strCategory,
+            text=category.strCategory, //category name
             color= Color.Black,
             style= TextStyle(fontWeight = FontWeight.Bold),
             modifier = Modifier.padding(top=4.dp)
