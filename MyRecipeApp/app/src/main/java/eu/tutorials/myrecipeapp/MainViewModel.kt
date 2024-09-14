@@ -23,6 +23,9 @@ class MainViewModel : ViewModel(){
         viewModelScope.launch {
             try{
                 val response = recipeService.getCategories()
+                //recipeService retrofit servis kismini temsil ediyor.
+                // servis kismindaki; val recipeService = retrofit.create(ApiService::class.java) bu tanimlama sayesindeApiService icindeki getCategories'e eristik.
+                //ApiService icindeki getCategories'e eristik. 
 
                 //basarili sekilde kategori alindi ise state'i guncelle
                 _categorieState.value = _categorieState.value.copy(

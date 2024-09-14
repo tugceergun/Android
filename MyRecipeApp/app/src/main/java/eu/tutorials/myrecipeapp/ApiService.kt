@@ -10,7 +10,8 @@ private val retrofit = Retrofit.Builder().baseUrl("https://www.themealdb.com/api
     .addConverterFactory(GsonConverterFactory.create())
     .build()
 
-val recipeService = retrofit.create(ApiService::class.java)
+val recipeService = retrofit.create(ApiService::class.java)  //ustteki retrofit'in devami gibi. recipeService degiskenine atadik.
+//ApiService::class.java --> bu sayede ApiService icindeki metodlara ulasabiliriz. (getCategories'e mesela)
 
 interface ApiService{
 
