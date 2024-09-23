@@ -58,6 +58,12 @@ fun LocationDisplay(
     viewModel: LocationViewModel,
     context: Context
 ){
+    val location = viewModel.location.value
+
+    //konumu alma.
+    val address= location?.let{
+        locationUtils.reverseGeocodeLocation(location)
+    }
 
     //izin baslaticisi //register a request to start an activity and handle the result
     // onResult -> results of the location permission requests
@@ -67,6 +73,8 @@ fun LocationDisplay(
             if(permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true
                 && permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true){
                 // izne sahibim
+                locationUtils.requestLocationUpdates(viewModel= viewModel)
+
             }else{
                 //izin iste
                 val rationaleRequired = ActivityCompat.shouldShowRequestPermissionRationale(
@@ -94,11 +102,18 @@ fun LocationDisplay(
     Column( modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center) {
-        Text(text = "Location not available")
+
+        if(location != null){
+            Text("Address: ${location.latitude} ${location.longitude} \n $address")
+        }else{
+            Text(text = "Location not available")
+        }
+
         
         Button(onClick = {
             if(locationUtils.hasLocationPermission(context)){
                 //permission already granted update the location
+                locationUtils.requestLocationUpdates(viewModel)
 
             }else{
                 //Request location permission

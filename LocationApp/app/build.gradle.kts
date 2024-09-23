@@ -51,6 +51,9 @@ android {
 
 dependencies {
 
+    //play services map
+    implementation("com.google.android.gms:play-services-maps:18.2.0")
+
     //viewModel
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
     //google maps

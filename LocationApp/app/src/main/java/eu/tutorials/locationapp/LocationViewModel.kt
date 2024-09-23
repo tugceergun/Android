@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 
 class LocationViewModel: ViewModel() {
     private val _location = mutableStateOf<LocationData?>(null)
-    val location: State<LocationData?> = _location
+    val location: State<LocationData?> = _location  //enlem, boylam iceren konum verilerinin durumu.
 
 
     fun updateLocation(newLocation: LocationData){
