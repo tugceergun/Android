@@ -5,6 +5,7 @@ data class LocationData(
     val longitude: Double
 )
 
+//google maps api'ne yaptigimiz ve bize geri donen istek.
 data class GeocodingResponse(
     val results: List<GeocodingResult>,
     val status: String
