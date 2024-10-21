@@ -21,11 +21,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import eu.tutorials.mywishlistapp.data.DummyWishList
 import eu.tutorials.mywishlistapp.data.Wish
 
 @Composable
-fun HomeView() {
+fun HomeView(
+    navController: NavController,
+    viewModel: WishViewModel
+) {
 
     val context = LocalContext.current
     //now we can use AppBarView.
@@ -42,6 +46,7 @@ fun HomeView() {
                 onClick = {
                     //TODO add Navigation to add screen
                     Toast.makeText(context, "FAButtonClicked", Toast.LENGTH_LONG).show()
+                    navController.navigate(Screen.AddScreen.route)
                 }) {
                 Icon(imageVector = Icons.Default.Add , contentDescription = null)
             }
