@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 abstract class WishDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE) //zaten var olan wish ekliyorsak ihnore strategy kullandik.
-    abstract suspend fun addWish(wishEntity: Wish) //wishEntity, wish.kt -> entity wih
+    abstract suspend fun addAWish(wishEntity: Wish) //wishEntity, wish.kt -> entity wih
 
     //loads all wishes from the wish table
     @Query("Select * from `wish-table`")
