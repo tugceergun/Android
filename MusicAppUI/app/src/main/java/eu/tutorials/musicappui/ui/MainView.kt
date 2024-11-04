@@ -2,6 +2,7 @@ package eu.tutorials.musicappui.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -27,9 +28,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import eu.tutorials.musicappui.MainViewModel
 import eu.tutorials.musicappui.Screen
 import eu.tutorials.musicappui.screensInDrawer
 import kotlinx.coroutines.CoroutineScope
@@ -41,15 +47,23 @@ fun MainView(){
 
     val scaffoldState: ScaffoldState = rememberScaffoldState()
     val scope: CoroutineScope = rememberCoroutineScope()
+    //viewModel
+    val viewModel: MainViewModel = viewModel()
 
     //allow us to find out on which "view" we current are (which screen)
     val controller: NavController = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
+    //use viewModel
+    val currentScreen = remember{
+        viewModel.currentScreen.value
+    }
+
+    //we can use currentScreen for the remember title
     val title = remember{
-        //TODO change that currentScreen.title
-        mutableStateOf("")
+        //change that currentScreen.title
+        mutableStateOf(currentScreen.title) //now title is dynamic
     }
 
     Scaffold(
@@ -87,7 +101,8 @@ fun MainView(){
         }
 
     ) {
-        Text("Text", modifier = Modifier.padding(it))
+        //Text("Text", modifier = Modifier.padding(it))
+        Navigation(navController = controller, viewModel = viewModel, pd = it)
     }
 
 }
@@ -117,5 +132,21 @@ fun DrawerItem(
             style= MaterialTheme.typography.titleMedium,
         )
     }
+
+}
+
+@Composable
+fun Navigation(navController: NavController, viewModel: MainViewModel, pd: PaddingValues){
+
+    NavHost(navController = navController as NavHostController,
+        startDestination = Screen.DrawerScreen.AddAccount.route, modifier = Modifier.padding(pd)
+    ){
+            composable(Screen.DrawerScreen.AddAccount.route){
+
+            }
+            composable(Screen.DrawerScreen.Subscription.route){
+
+            }
+        }
 
 }
