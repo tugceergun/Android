@@ -38,6 +38,7 @@ import androidx.navigation.compose.rememberNavController
 import eu.tutorials.musicappui.MainViewModel
 import eu.tutorials.musicappui.Screen
 import eu.tutorials.musicappui.screensInDrawer
+import eu.tutorials.musicappui.ui.theme.AccountDialog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
@@ -54,6 +55,11 @@ fun MainView(){
     val controller: NavController = rememberNavController()
     val navBackStackEntry by controller.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
+
+    //dialog open or not
+    val dialogOpen = remember{
+        mutableStateOf(false)
+    }
 
     //use viewModel
     val currentScreen = remember{
@@ -91,6 +97,7 @@ fun MainView(){
                         }
                         if(item.dRoute == "add_account") {
                             //open dialog
+                            dialogOpen.value= true
                         }else{
                                 controller.navigate(item.route)
                             title.value = item.dTtile // navigate the other page and set title
@@ -103,6 +110,8 @@ fun MainView(){
     ) {
         //Text("Text", modifier = Modifier.padding(it))
         Navigation(navController = controller, viewModel = viewModel, pd = it)
+        
+        AccountDialog(dialogOpen = dialogOpen)
     }
 
 }
