@@ -42,9 +42,9 @@ fun AccountView(){
                 }
             }
             IconButton(onClick = {}) {
-                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight,
+                Icon(imageVector = Icons.AutoMirrored.Filled.KeyboardArrowRight, //yana acilan buton
                     contentDescription = null
-                    )
+                )
             }
         }
 
