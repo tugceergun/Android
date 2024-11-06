@@ -6,8 +6,11 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
 import androidx.compose.material.ScaffoldState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
@@ -37,6 +40,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import eu.tutorials.musicappui.MainViewModel
 import eu.tutorials.musicappui.Screen
+import eu.tutorials.musicappui.screensInBottom
 import eu.tutorials.musicappui.screensInDrawer
 import eu.tutorials.musicappui.ui.theme.AccountDialog
 import eu.tutorials.musicappui.ui.theme.AccountView
@@ -74,7 +78,28 @@ fun MainView(){
         mutableStateOf(currentScreen.title) //now title is dynamic
     }
 
+    val bottomBar: @Composable () -> Unit = {
+        if(currentScreen is Screen.DrawerScreen || currentScreen == Screen.BottomScreen.Home){
+            BottomNavigation(Modifier.wrapContentSize()){
+                screensInBottom.forEach{
+                    item -> 
+                    BottomNavigationItem(selected = currentRoute==item.bRoute , //which screen we select
+                        onClick = { controller.navigate(item.bRoute) },
+                        icon = {
+                            Icon(contentDescription = item.bTitle,
+                               painter = painterResource(id = item.icon) )//painterResource -> coming from DrawebleRes
+                        },
+                        label = {Text(text = item.bTitle)},
+                        selectedContentColor = Color.White,
+                        unselectedContentColor = Color.Black
+                        )
+                }
+            }
+        }
+    }
+
     Scaffold(
+        bottomBar = bottomBar,
         topBar = {
             TopAppBar(title = { Text(title.value) }, //current screen title
                 navigationIcon = { IconButton(onClick = {
