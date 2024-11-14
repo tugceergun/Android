@@ -46,6 +46,7 @@ import eu.tutorials.musicappui.ui.theme.AccountDialog
 import eu.tutorials.musicappui.ui.theme.AccountView
 import eu.tutorials.musicappui.ui.theme.Browse
 import eu.tutorials.musicappui.ui.theme.Home
+import eu.tutorials.musicappui.ui.theme.Library
 import eu.tutorials.musicappui.ui.theme.Subscription
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
@@ -193,6 +194,7 @@ fun Navigation(navController: NavController, viewModel: MainViewModel, pd: Paddi
 
             composable(Screen.BottomScreen.Library.bRoute){
                 //TODO Add library screen
+                Library()
             }
 
             composable(Screen.DrawerScreen.Account.route){
