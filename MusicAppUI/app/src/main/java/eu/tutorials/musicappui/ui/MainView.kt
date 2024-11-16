@@ -119,7 +119,9 @@ fun MainView(){
                     val tint = if(isSelected)Color.White else Color.Black //secilirse beyaz renk olur.
 
                     BottomNavigationItem(selected = currentRoute==item.bRoute , //which screen we select
-                        onClick = { controller.navigate(item.bRoute) },
+                        onClick = { controller.navigate(item.bRoute)
+                                  title.value = item.bTitle // hangi sayfaya tiklaniyorsa title degisir.
+                                  },
                         icon = {
 
                             Icon(tint = tint,
