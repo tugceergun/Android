@@ -1,5 +1,6 @@
 package eu.tutorials.musicappui.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
@@ -85,14 +86,20 @@ fun MainView(){
         if(currentScreen is Screen.DrawerScreen || currentScreen == Screen.BottomScreen.Home){
             BottomNavigation(Modifier.wrapContentSize()){
                 screensInBottom.forEach{
-                    item -> 
+                    item ->
+                    val isSelected = currentRoute == item.bRoute
+                    Log.d("Navigation","Item: ${item.bTitle}, Current route: $currentRoute, is selected ")
+                    val tint = if(isSelected)Color.White else Color.Black //secilirse beyaz renk olur.
+
                     BottomNavigationItem(selected = currentRoute==item.bRoute , //which screen we select
                         onClick = { controller.navigate(item.bRoute) },
                         icon = {
-                            Icon(contentDescription = item.bTitle,
+
+                            Icon(tint = tint,
+                                contentDescription = item.bTitle,
                                painter = painterResource(id = item.icon) )//painterResource -> coming from DrawebleRes
                         },
-                        label = {Text(text = item.bTitle)},
+                        label = {Text(text = item.bTitle, color= tint )},
                         selectedContentColor = Color.White,
                         unselectedContentColor = Color.Black
                         )
