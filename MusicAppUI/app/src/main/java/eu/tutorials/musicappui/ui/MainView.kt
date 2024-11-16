@@ -30,6 +30,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material.Scaffold
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.primarySurface
 import androidx.compose.material.rememberBottomSheetState
 import androidx.compose.material.rememberModalBottomSheetState
@@ -146,6 +147,20 @@ fun MainView(){
             bottomBar = bottomBar,
             topBar = {
                 TopAppBar(title = { Text(title.value) }, //current screen title
+                    actions = {
+                          IconButton(
+                              onClick = {
+                                  scope.launch {
+                                      if(modalSheetState.isVisible)
+                                          modalSheetState.hide()
+                                      else
+                                          modalSheetState.show()
+                                  }
+                              }
+                          ){
+                              Icon(imageVector = Icons.Default.MoreVert, contentDescription = null)
+                          }
+                    },
                     navigationIcon = { IconButton(onClick = {
                         //Open the drawer
                         scope.launch {
@@ -235,6 +250,18 @@ fun MoreBottomSheet(modifier: Modifier){
                 painter = painterResource(id = R.drawable.baseline_settings_24),
                     contentDescription = "Settings")
                 Text(text = "Settings", fontSize = 20.sp, color = Color.White)
+            }
+            Row(modifier = modifier.padding(16.dp)){
+                Icon(modifier = Modifier.padding(end = 8.dp),
+                    painter = painterResource(id = R.drawable.ic_baseline_share_24),
+                    contentDescription = "Share")
+                Text(text = "Share", fontSize = 20.sp, color = Color.White)
+            }
+            Row(modifier = modifier.padding(16.dp)){
+                Icon(modifier = Modifier.padding(end = 8.dp),
+                    painter = painterResource(id = R.drawable.ic_help_green),
+                    contentDescription = "Help")
+                Text(text = "Help", fontSize = 20.sp, color = Color.White)
             }
         }
     }
